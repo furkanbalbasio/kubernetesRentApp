@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-userservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-user
+  template: 
+    metadata:
+      labels:
+        app: deployment-user  
+    spec:
+      containers:
+      - name: deployment-userservice
+        image: furkanbalbasio/java11boostusermicroservice:v005
+        ##docker da bulunan image
+        resources:
+          limits:
+            cpu: "300m"
+            memory: "1024Mi"
+        ports:
+        - containerPort: 9092
+        ## yml de tanimlanan server portu aliyoruz.
+        env:
+          - name: MONGO_HOST
+            value: "10.12.0.55"
+          - name: MONGO_PORT
+            value: "27017"
+          - name: MONGO_DBNAME
+            value: "UserProfileDB"  
+          - name: MONGO_USERNAME
+            value: "defaultUser"
+          - name: MONGO_PASSWORD
+            value: "bilge!*123"

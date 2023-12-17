@@ -1,0 +1,15 @@
+## Bu service loadbalancer kullanarak pods lari dis dunyaya acacak
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-mongodb
+spec: 
+  selector:
+    db: deployment-mongodb-label 
+  type: LoadBalancer
+  ports:
+  - name: mongodb-port
+    port: 27017
+   ## disaridan gelen port loadbalancer a baglanmak icin kullanilan port
+    targetPort: 27017
+   ## pods lara gidecek port

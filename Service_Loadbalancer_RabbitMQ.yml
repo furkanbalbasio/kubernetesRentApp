@@ -1,0 +1,20 @@
+## Bu service loadbalancer kullanarak pods lari dis dunyaya acacak
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-rabbitmq
+spec: 
+  selector:
+    db: deployment-rabbitmq-label 
+  type: LoadBalancer
+  ports:
+  - name: rabbitmq-port-web
+    port: 15672
+   ## disaridan gelen port loadbalancer a baglanmak icin kullanilan port
+    targetPort: 15672
+   ## pods lara gidecek port
+  - name: rabbitmq-port-restapi
+    port: 5672
+   ## disaridan gelen port loadbalancer a baglanmak icin kullanilan port
+    targetPort: 5672
+   ## pods lara gidecek port 

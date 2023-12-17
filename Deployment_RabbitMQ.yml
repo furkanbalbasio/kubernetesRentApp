@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: deployment-rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      db: deployment-rabbitmq-label
+  template:
+    metadata:
+      labels:
+        db: deployment-rabbitmq-label
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3-management
+        resources:
+          limits:
+            memory: "2048Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 15672 #Web uzerinde baglanmak icin
+        - containerPort: 5672 #restAPI uzerinde istek gondermek icin
+        env:
+          - name: RABBITMQ_DEFAULT_USER
+            value: "BilgeAdmin"
+          - name: RABBITMQ_DEFAULT_PASS
+            value: "BilgeAdam!!**"      
+

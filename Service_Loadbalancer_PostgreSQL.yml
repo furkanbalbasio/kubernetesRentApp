@@ -1,0 +1,15 @@
+## Bu service loadbalancer kullanarak pods lari dis dunyaya acacak
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-postgresql
+spec: 
+  selector:
+    db: deployment-postgresql-label 
+  type: LoadBalancer
+  ports:
+  - name: postgre-port
+    port: 11111
+   ## disaridan gelen port loadbalancer a baglanmak icin kullanilan port
+    targetPort: 5432
+   ## pods lara gidecek port

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: deployment-postgresql #olusturulacak olan objenin adini belirtiyorsunuz.
+spec: #ilgili objenin ozelliklerini belirtiyoruz.
+  replicas: 1
+  selector: # label -etiketler tum objelerde objeyi ayirt etmek icin kullanilir.
+    matchLabels: #bir yonetici objenin yonetecegi objeleri ayirt etmesi icin kullanilir.
+      db: deployment-postgresql-label # buradaki etiketler KEY:VALUE seklindedir ve istenildigi gibi yazilabilir.
+  template: # olusturulacak pod icin ozellik belirtme
+    metadata:
+      labels: #poda atanacak etiketler
+        db: deployment-postgresql-label
+    spec: #olusturulacak pod ya da podlarin ozelliklerini belirliyoruz.
+      containers: #bir pod icinde bir ya da daha fazla container olabilir. ama genellikle tek kullaniriz.
+      - name: postgresql #olusturulacak container adi
+        image: postgres  #pod icinde ayaga kalkacak calistirilacak uygulama(hub.docker dan cekilir.)
+        resources: #pod icinde olusturulacak container in kullanabilecegi sistem kaynaklarini tanimliyoruz.
+          requests: #gerekli olan min sistem kaynagi
+            memory: "100Mi"
+            cpu: "30m"
+          limits: # container in kullanabilecegi max limitleri tanimliyoruz.
+            memory: "200Mi" #bellek miktari
+            cpu: "100m" #islemci kullanim miktari
+        ports: #disariya acilacak olan portlari belirtiyorsunuz.
+        - containerPort: 5432
+        env: #isletim isstemi ortam degiskenlerini tanimliyoruz.
+          - name: POSTGRES_PASSWORD
+            value: BilgeAdam!!**    

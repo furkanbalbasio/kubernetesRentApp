@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-authservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-auth
+  template: 
+    metadata:
+      labels:
+        app: deployment-auth  
+    spec:
+      containers:
+      - name: deployment-authservice
+        image: furkanbalbasio/java11boostauthmicroservice:v008
+        ##docker da bulunan image
+        resources:
+          limits:
+            cpu: "300m"
+            memory: "1024Mi"
+        ports:
+        - containerPort: 9090
+        ## yml de tanimlanan server portu aliyoruz.
+        env:
+          - name: POSTGRES_PASSWORD
+            value: BilgeAdam!!**
+          - name: POSTGRES_URL
+            value: jdbc:postgresql://10.12.0.50:5432/trivagoAuthDB
+          - name: USER_PROFILE_URL
+            value: http://clusterip-user:9092/userProfile
+          - name: CONFIG_SERVER
+            value: http://10.12.0.62:8888
+

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-configservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment-config
+  template: 
+    metadata:
+      labels:
+        app: deployment-config  
+    spec:
+      containers:
+      - name: deployment-configservice
+        image: furkanbalbasio/configservergit:v001
+
+        ##docker da bulunan image
+        resources:
+          limits:
+            cpu: "300m"
+            memory: "1024Mi"
+        ports:
+        - containerPort: 8888
+        ## yml de tanimlanan server portu aliyoruz.
+        env:
+          - name: GIT_KEY
+            value: "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"
+
+
